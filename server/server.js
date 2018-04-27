@@ -18,7 +18,7 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New User connected');
 
-  socket.emit('newMessage', generateMessage('Chatbot', 'Welcome to the Chat App'));
+  socket.emit('newMessage', generateMessage('JabberBot', 'Welcome to the JabberApp'));
 
   socket.broadcast.emit('newMessage', generateMessage('Chatbot', 'New user joined!'));
 
