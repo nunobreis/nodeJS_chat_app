@@ -16,11 +16,20 @@ const scrollToBottom = () => {
   }
 };
 
-socket.on('connect', function () {
-  console.log('Connected to server');
+socket.on('connect', () => {
+  const params = $.deparam(window.location.search);
+
+  socket.emit('join', params, (error) => {
+    if (error) {
+      window.alert(error);
+      window.location.href = '/';
+    } else {
+      console.log('No error');
+    }
+  });
 });
 
-socket.on('disconnect', function () {
+socket.on('disconnect', () => {
   console.log('Disconnected from server');
 });
 

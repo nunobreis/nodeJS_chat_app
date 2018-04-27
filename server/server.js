@@ -7,6 +7,8 @@ const {
   generateMessage,
   generateLocationMessage
 } = require('./utils/message');
+const { isRealString } = require('./utils/validation');
+
 const publicPath = path.join(__dirname, '/../public');
 const port = process.env.PORT || 3000;
 const app = express();
@@ -17,6 +19,12 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
   console.log('New User connected');
+
+  socket.on('join', (params, callback) => {
+    if (!isRealString(params.name) || !isRealString(params.room)) {
+      callback('Nickname and Room are required');
+    }
+  });
 
   socket.emit('newMessage', generateMessage('JabberBot', 'Welcome to the JabberApp'));
 
